@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 09:14:26 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/27 11:59:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/04/27 15:54:20 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <fcntl.h>
 
 void	verif(char **map)
 {
@@ -31,42 +30,28 @@ void	verif(char **map)
 int		main(void)
 {
 	char	*line;
-	int		cont;
 	int		i;
-	int		*tab;
-	char	**map;
-	char	**piece;
-	char	c;
+	int		fd;
+	t_game	filler;
 
-	c = 'p';
+	filler.c = 'p';
 	line = NULL;
 	get_next_line(0, &line);
-	if (line && !ft_strcmp(line, "$$$ exec p1 : [./filler]"))
-		c = 'o';
-	else
-		c = 'x';
-	cont = 1;
-	while (cont)
-	{
-		get_next_line(0, &line);
-		if (!ft_strncmp(line, "Plateau", 7))
-		{
-			tab = coord_map(line);
-			get_next_line(0, &line);
-			map = init_map(tab);
-			get_next_line(0, &line);
-			tab = coord_map(line);
-			i = 0;
-			piece = (char**)malloc(sizeof(char*) * (tab[0] + 1));
-			while (i < tab[0])
-				get_next_line(0, &piece[i++]);
-			piece[tab[0]] = NULL;
-			verif(piece);
-		}
-	}
-	while (1)
-	{
-		write(1, "5 12\n", 5);
-	}
+	filler.c = init_char(line);
+	get_next_line(0, &line);
+	filler.coordmap = coord_map(line);
+	get_next_line(0, &line);
+	filler.map = init_map(filler.coordmap);
+	get_next_line(0, &line);
+	filler.coordpiece = coord_map(line);
+	i = 0;
+	filler.piece = (char**)malloc(sizeof(char*) * (filler.coordpiece[0] + 1));
+	while (i < filler.coordpiece[0])
+		get_next_line(0, &(filler.piece[i++]));
+	filler.piece[i] = NULL;
+	write(1, "5 12\n", 5);
+	fd = open("iverif", O_RDWR /*| O_TRUNC */| O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR);
+	fill(&filler, line, fd);
+	close(fd);
 	return (0);
 }

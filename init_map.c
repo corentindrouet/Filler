@@ -6,13 +6,18 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 10:57:22 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/27 11:59:40 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/04/27 15:51:48 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	*coord_map(char *line)
+char	init_char(char *str)
+{
+	return ((str && !ft_strcmp(str, "$$$ exec p1 : [./filler]")) ? 'o': 'x');
+}
+
+int		*coord_map(char *line)
 {
 	int		*tab;
 	char	**split;

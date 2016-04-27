@@ -1,5 +1,5 @@
-seed = 4506
-O: error on input
+seed = 7571
+./filler: Segfault at 1
 ./resources/carli.filler won
 Score:
-0AGAINST0
+1AGAINST14
