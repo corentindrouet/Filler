@@ -6,13 +6,14 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/15 08:11:19 by cdrouet           #+#    #+#              #
-#    Updated: 2016/04/27 09:22:22 by cdrouet          ###   ########.fr        #
+#    Updated: 2016/04/27 11:49:47 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = filler
 
 SRC = main.c \
+	  init_map.c \
 
 BIN = $(SRC:.c=.o)
 
