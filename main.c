@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 09:14:26 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/28 13:41:35 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/04/28 15:07:55 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,23 @@ void	free_filler(t_game **filler)
 int		main(void)
 {
 	char	*line;
-	char	p[10];
+	char	p[20];
 	char	c;
 	char	*co;
-	int fd;
 	t_game	*filler;
 
-	fd = open("verif", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR);
 	c = 'p';
 	line = NULL;
 	get_next_line(0, &co);
 	c = init_char(co);
 	ft_strcpy(p, "5 11\n");
 	while (get_next_line(0, &line))
-	{
 		if (ft_strlen(line) > 0)
 		{
-			filler = get_data(c, line, fd);
-			free_filler(&filler);
+			filler = get_data(c, line);
 			set_p(p, filler);
+			free_filler(&filler);
 			write(1, p, ft_strlen(p));
-//			while (get_next_line(0, &line))
 		}
-	}
-	close(fd);
 	return (0);
 }
