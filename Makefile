@@ -6,7 +6,7 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/15 08:11:19 by cdrouet           #+#    #+#              #
-#    Updated: 2016/04/27 14:26:33 by cdrouet          ###   ########.fr        #
+#    Updated: 2016/04/28 08:57:25 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = filler
 
 SRC = main.c \
 	  init_map.c \
-	  fil_recur.c \
+	  get_data.c \
 
 BIN = $(SRC:.c=.o)
 

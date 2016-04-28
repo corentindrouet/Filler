@@ -1,5 +1,4 @@
-seed = 7571
-./filler: Segfault at 1
+seed = 7436
 ./resources/carli.filler won
 Score:
-1AGAINST14
+2AGAINST16
