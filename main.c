@@ -6,26 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 09:14:26 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/28 15:07:55 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/04/29 11:12:32 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-void	verif(char **map)
-{
-	int	i;
-	int		fd;
-
-	i = -1;
-	fd = open("verif", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR);
-	while (map[++i])
-	{
-		write(fd, map[i], ft_strlen(map[i]));
-		write(fd, "\n", 1);
-	}
-	close(fd);
-}
 
 void	free_filler(t_game **filler)
 {
@@ -34,11 +19,11 @@ void	free_filler(t_game **filler)
 
 	tmp = *filler;
 	i = -1;
-	while (tmp->map[++i])
+	while (++i < tmp->coordmap[0])
 		free(tmp->map[i]);
 	free(tmp->map);
 	i = -1;
-	while (tmp->piece[++i])
+	while (++i < tmp->coordpiece[0])
 		free(tmp->piece[i]);
 	free(tmp->piece);
 	free(tmp->coordmap);

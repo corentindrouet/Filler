@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/28 08:46:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/28 15:28:45 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/04/29 15:04:50 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_game	*get_data(char c, char *param)
 
 char	ncar(char c)
 {
-	return ((c == 'o') ? 'x': 'o');
+	return ((c == 'o') ? 'x' : 'o');
 }
 
 int		piece_ok(int i, int j, t_game *filler)
@@ -54,19 +54,17 @@ int		piece_ok(int i, int j, t_game *filler)
 	{
 		k = -1;
 		while (++k < filler->coordpiece[1])
-		{
 			if (filler->piece[l][k] == '*')
 			{
-				if ((l + i) < 0 || (k + j) < 0
-					|| (l + i) >= filler->coordmap[0]
-						|| (k + j) >= filler->coordmap[1]
-							|| ft_tolower(filler->map[l + i][k + j]) == ncar(filler->c))
+				if ((l + i) < 0 || (k + j) < 0 || (l + i) >= filler->coordmap[0]
+					|| (k + j) >= filler->coordmap[1]
+						|| ft_tolower(filler->map[l + i][k + j])
+							== ncar(filler->c))
 					return (0);
 				else if (ft_tolower(filler->map[l + i][k + j]) == filler->c)
 					if (++nb_superpose > 1)
 						return (0);
 			}
-		}
 	}
 	if (nb_superpose == 1)
 		return (1);
@@ -75,11 +73,7 @@ int		piece_ok(int i, int j, t_game *filler)
 
 int		w_p(char *p, int i, int j)
 {
-	int	k;
-
-	k = -1;
-	while (p[++k])
-		p[k] = '\0';
+	ft_bzero(p, ft_strlen(p));
 	ft_strcpy(p, ft_itoa(i));
 	ft_strcat(p, " ");
 	ft_strcat(p, ft_itoa(j));
@@ -87,21 +81,44 @@ int		w_p(char *p, int i, int j)
 	return (1);
 }
 
+/*void	r(t_pt *prout)
+{
+	int	fd;
+	char	*line;
+
+	fd = open("verif", O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	while (prout)
+	{
+		line = ft_itoa(prout->x);
+		write(fd, line, ft_strlen(line));
+		write(fd, " |-| ", 5);
+		line = ft_itoa(prout->y);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		prout = prout->next;
+	}
+	close(fd);
+}*/
+
 int		set_p(char *p, t_game *filler)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_pt	*all_pos;
 
 	i = filler->coordpiece[0] * -1;
+	all_pos = NULL;
 	while (++i < filler->coordmap[0])
 	{
 		j = filler->coordpiece[1] * -1;
 		while (++j < filler->coordmap[1])
 		{
 			if (piece_ok(i, j, filler))
-				return (w_p(p, i, j));
+				add_end_lst(&all_pos, new_pt(i, j));
 		}
 	}
+	if (all_pos)
+		return (w_p(p, all_pos->x, all_pos->y));
 	ft_strcpy(p, "0 0\n");
 	return (0);
 }
