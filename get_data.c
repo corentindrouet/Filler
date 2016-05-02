@@ -6,11 +6,16 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/28 08:46:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/29 15:04:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/02 13:41:00 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+char	ncar(char c)
+{
+	return ((c == 'o') ? 'x' : 'o');
+}
 
 t_game	*get_data(char c, char *param)
 {
@@ -20,26 +25,19 @@ t_game	*get_data(char c, char *param)
 
 	line = NULL;
 	filler = (t_game*)malloc(sizeof(t_game));
+	filler->c = c;
 	filler->coordmap = coord_map(param);
 	get_next_line(0, &line);
 	filler->map = init_map(filler->coordmap);
+	filler->adv = search_player(ncar(c), filler->map, filler->coordmap);
 	get_next_line(0, &line);
 	filler->coordpiece = coord_map(line);
 	i = -1;
 	filler->piece = (char**)malloc(sizeof(char*) * (filler->coordpiece[0] + 1));
 	while (++i < filler->coordpiece[0])
-	{
-		get_next_line(0, &line);
-		filler->piece[i] = ft_strjoin(line, "");
-	}
+		get_next_line(0, &(filler->piece[i]));
 	filler->piece[i] = NULL;
-	filler->c = c;
 	return (filler);
-}
-
-char	ncar(char c)
-{
-	return ((c == 'o') ? 'x' : 'o');
 }
 
 int		piece_ok(int i, int j, t_game *filler)
@@ -81,25 +79,6 @@ int		w_p(char *p, int i, int j)
 	return (1);
 }
 
-/*void	r(t_pt *prout)
-{
-	int	fd;
-	char	*line;
-
-	fd = open("verif", O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
-	while (prout)
-	{
-		line = ft_itoa(prout->x);
-		write(fd, line, ft_strlen(line));
-		write(fd, " |-| ", 5);
-		line = ft_itoa(prout->y);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		prout = prout->next;
-	}
-	close(fd);
-}*/
-
 int		set_p(char *p, t_game *filler)
 {
 	int		i;
@@ -112,10 +91,8 @@ int		set_p(char *p, t_game *filler)
 	{
 		j = filler->coordpiece[1] * -1;
 		while (++j < filler->coordmap[1])
-		{
 			if (piece_ok(i, j, filler))
 				add_end_lst(&all_pos, new_pt(i, j));
-		}
 	}
 	if (all_pos)
 		return (w_p(p, all_pos->x, all_pos->y));

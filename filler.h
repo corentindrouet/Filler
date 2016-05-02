@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 09:13:07 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/29 14:05:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/02 13:42:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 
-typedef struct	s_game
-{
-	char		**map;
-	char		**piece;
-	int			*coordmap;
-	int			*coordpiece;
-	char		c;
-}				t_game;
-
 typedef struct	s_pt
 {
 	int			x;
@@ -31,6 +22,17 @@ typedef struct	s_pt
 	struct s_pt	*next;
 }				t_pt;
 
+typedef struct	s_game
+{
+	char		**map;
+	char		**piece;
+	int			*coordmap;
+	int			*coordpiece;
+	char		c;
+	t_pt		*adv;
+}				t_game;
+
+t_pt			*search_player(char c, char **map, int *coordmap);
 int				*coord_map(char *line);
 char			**init_map(int *tab);
 char			init_char(char *str);

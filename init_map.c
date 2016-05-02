@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 10:57:22 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/04/29 14:05:27 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/02 13:42:20 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,26 @@ char	**init_map(int *tab)
 		free(line);
 	}
 	return (map);
+}
+
+t_pt	*search_player(char c, char **map, int *coordmap)
+{
+	int		i;
+	int		j;
+	t_pt	*coo;
+
+	coo = (t_pt*)malloc(sizeof(t_pt));
+	i = -1;
+	while (++i < coordmap[0])
+	{
+		j = -1;
+		while (++j < coordmap[1])
+			if (map[i][j] == c)
+			{
+				coo->x = i;
+				coo->y = j;
+				coo->next = NULL;
+			}
+	}
+	return (NULL);
 }
