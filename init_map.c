@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 10:57:22 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/05/02 13:42:20 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/03 11:03:35 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ t_pt	*search_player(char c, char **map, int *coordmap)
 	{
 		j = -1;
 		while (++j < coordmap[1])
-			if (map[i][j] == c)
+			if (map[i][j] == ft_toupper(c))
 			{
 				coo->x = i;
 				coo->y = j;
 				coo->next = NULL;
+				return (coo);
 			}
 	}
 	return (NULL);

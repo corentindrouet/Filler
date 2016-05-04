@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 09:13:07 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/05/02 13:42:07 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/04 14:16:20 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_pt
 {
 	int			x;
 	int			y;
+	int			dist;
 	struct s_pt	*next;
 }				t_pt;
 
@@ -32,6 +33,9 @@ typedef struct	s_game
 	t_pt		*adv;
 }				t_game;
 
+int				opti_filler(char *p, t_game *filler, t_pt *all_pos);
+t_pt			*lowest_len(t_pt *lst);
+int				lst_len(t_pt *lst);
 t_pt			*search_player(char c, char **map, int *coordmap);
 int				*coord_map(char *line);
 char			**init_map(int *tab);

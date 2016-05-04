@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/28 08:46:18 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/05/02 13:41:00 by cdrouet          ###   ########.fr       */
+/*   Updated: 2016/05/04 14:15:49 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ char	ncar(char c)
 
 t_game	*get_data(char c, char *param)
 {
-	char	*line;
-	int		i;
-	t_game	*filler;
+	char		*line;
+	int			i;
+	t_game		*filler;
+	static t_pt	*adv = NULL;
 
 	line = NULL;
 	filler = (t_game*)malloc(sizeof(t_game));
@@ -29,7 +30,9 @@ t_game	*get_data(char c, char *param)
 	filler->coordmap = coord_map(param);
 	get_next_line(0, &line);
 	filler->map = init_map(filler->coordmap);
-	filler->adv = search_player(ncar(c), filler->map, filler->coordmap);
+	if (adv == NULL)
+		adv = search_player(ncar(c), filler->map, filler->coordmap);
+	filler->adv = adv;
 	get_next_line(0, &line);
 	filler->coordpiece = coord_map(line);
 	i = -1;
@@ -95,7 +98,8 @@ int		set_p(char *p, t_game *filler)
 				add_end_lst(&all_pos, new_pt(i, j));
 	}
 	if (all_pos)
-		return (w_p(p, all_pos->x, all_pos->y));
+		return (opti_filler(p, filler, all_pos));
+//		return (w_p(p, all_pos->x, all_pos->y));
 	ft_strcpy(p, "0 0\n");
 	return (0);
 }
